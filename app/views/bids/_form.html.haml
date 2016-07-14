@@ -1,0 +1,11 @@
+%row
+	.large-2.columns
+	.small-12.large-8.large-centered.columns
+		=simple_form_for([@property, @bid], :html => { :multipart => true } )do |f|
+			=f.input :vendor
+			=f.input :total_cost
+			=f.input :type, collection: ["GCBid", "HVAC", "Landscape"]
+			=f.file_field :attachment, :label => 'Upload Bid Please'
+			=f.button :submit, class: "radius"
+			%a.button.radius{href:property_path(@bid.property_id)} Cancel
+	.large-2.columns

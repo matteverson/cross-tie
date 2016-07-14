@@ -1,0 +1,87 @@
+%row
+	.large-12.columns
+		%h3="#{@property.address}"
+%row
+	.large-6.columns
+		%table.small-12
+			%tbody
+				%tr
+					%td.small-4.columns Address
+					%td.small-8.columns.rest-in-place{ 'data-object' => 'property', 'data-attribute' => 'address'}= @property.address
+				%tr
+					%td.small-4.columns Cross Tie ID
+					%td.small-8.columns= @property.id
+				%tr
+					%td.small-4.columns Portal ID
+					%td.small-8.columns=@property.portal_request_id
+				%tr
+					%td.small-4.columns Created At
+					%td.small-8.columns= @property.created_at
+				%tr
+					%td.small-4.columns Updated At
+					%td.small-8.columns= @property.updated_at
+	.large-6.columns
+		%table.small-12
+			%tbody
+				%tr 
+					%td.small-3.columns City
+					%td.small-9.columns.rest-in-place{ 'data-object' => 'property', 'data-attribute' => 'city'}= @property.city
+				%tr
+					%td.small-3.columns State
+					%td.small-9.columns.rest-in-place{ 'data-object' => 'property', 'data-attribute' => 'state'}= @property.state
+				
+				%tr 
+					%td.small-3.columns Bedrooms
+					%td.small-9.columns.rest-in-place{ 'data-object' => 'property', 'data-attribute' => 'beds'}= @property.beds
+				%tr
+					%td.small-3.columns Bathrooms
+					%td.small-9.columns.rest-in-place{ 'data-object' => 'property', 'data-attribute' => 'baths'}= @property.baths
+				%tr
+					%td.small-3.columns Square Feet
+					%td.small-9.columns.rest-in-place{ 'data-object' => 'property', 'data-attribute' => 'sq_ft'}= @property.sq_ft
+%row
+	.large-6.columns
+		%h4.subheader Bids
+		=link_to "Add", new_property_bid_path(@property), class: "button radius small"
+		/%h4.subheader="Total Cost: #{number_to_currency(@property.bidsums(params[:id]))}"
+		%table
+			%thead
+				%th
+				%th
+				%th Bid ID
+				%th Vendor
+				%th Total Cost
+				%th Date Submitted
+			%tbody
+			-@property.bids.each do |b|
+				%tr
+					%td=link_to "Edit", edit_bid_path(b)
+					%td=link_to "Del", bid_path(b), method: :delete
+					%td=link_to "#{b.id}", bid_path(b)
+					%td=b.vendor
+					%td=number_to_currency(b.total_cost)
+					%td=b.created_at.to_formatted_s(:long)			
+	.large-6.columns
+		%h4.subheader Rooms
+		-unless @property.import_completed
+			=form_tag import_rooms_path do
+				=hidden_field_tag(:id, "#{@property.id}")
+				=submit_tag "Import from DB", class: "button radius small"
+		%table
+			%thead
+				%td Room Id
+				%td Room Type
+				%td Room Name
+			%tbody
+    	
+			-@property.rooms.each do |r|
+				%tr 
+					%td=r.bidRoomId
+					%td=r.roomTypeId
+					%td=r.name
+	
+			
+%row
+	.large-12.columns
+		=link_to "Edit", edit_property_path, class: "a button radius"
+		=link_to "Delete", property_path, method: :delete, class: "a button radius", confirm: "Are you sure?"

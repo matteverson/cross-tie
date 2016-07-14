@@ -1,0 +1,25 @@
+.row
+	%h3 Items
+	
+/.row
+/	=form_tag import_items_path do
+/		=submit_tag "Import All", class: "button radius small"
+
+.row.large-12.columns
+	%table
+		%thead
+			/%td 
+			%td CrossTie ID
+			%td Portal ID
+			%td Description
+			%td Unit Cost
+			%td UOM
+		%tbody
+		-@items.each do |i|
+			%tr
+				/%td=link_to "Del", item_path(i), method: :delete, confirm: "Are you sure?"
+				%td=i.id
+				%td=i.itemCcId
+				%td=i.description
+				%td=number_to_currency(i.itemCost, precision: 0)
+				%td=i.uom

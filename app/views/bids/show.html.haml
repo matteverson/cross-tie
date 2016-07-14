@@ -1,0 +1,59 @@
+%h3=link_to "#{@property.address}", property_path(@property)
+%h4.subheader="Bid ID #{@bid.id}"
+=link_to "Edit", edit_bid_path, class: "a button radius small"
+=link_to "Delete", bid_path(params[:id]), method: :delete, class: "a button radius small", confirm: "Are you sure?"
+%row
+	.large-12.columns
+		%table
+			%tbody
+				%tr 
+					%td Vendor
+					%td= @bid.vendor
+				%tr
+					%td Type
+					%td= @bid.type
+				%tr 
+					%td Total Cost
+					%td= @bid.total_cost
+				%tr
+					%td Attachment
+					%td= @bid.attachment
+				%tr
+					%td Imported?
+					%td= @bid.imported?
+				%tr
+					%td Uploaded?
+					%td= @bid.uploaded?
+-if @bid.type == "GCBid"
+	%row
+		-if !@bid.imported?
+			=link_to "Import Bid Items", import_manifests_path(params[:id]), class: "button radius small"
+		-if @bid.imported? && !@bid.uploaded?
+			=link_to "Post to Portal", post_to_portal_path(params[:id]), class: "button radius small"
+	%row
+		.large-12.columns
+			%table
+				%thead
+					%th 
+					%th Room
+					%th Item ID
+					%th Description
+					%th Reason
+					%th Quantity
+					%th Unit Cost (UOM)
+					%th Total Cost
+				%tbody
+				-@bid.manifests.each do |m|
+					%tr
+						%td=link_to "DEL", manifest_path(m.id), method: :delete
+						%td=m.room_id
+						%td.rest-in-place{ 'data-object' => 'manifest', 'data-attribute' => 'item_id', 'data-url' => "/manifests/#{m.id}"}=m.item_id
+						%td=m.description
+						%td=m.reason
+						%td.rest-in-place{ 'data-object' => 'manifest', 'data-attribute' => 'quantity', 'data-url' => "/manifests/#{m.id}"}=m.quantity
+						%td=m.unit_cost
+						%td=m.total_cost
+					
+	
+	
+	

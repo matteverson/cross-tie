@@ -1,0 +1,6 @@
+%row
+	.small-12.large-8.large-centered.columns
+		=simple_form_for @property do |f|
+			=f.input :portal_request_id
+			=f.button :submit, class: "radius"
+			%a.button.radius{href:properties_path} Cancel

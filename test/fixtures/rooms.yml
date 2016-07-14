@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  bidRoomId: 1
+  bidRequestId: 1
+  roomTypeId: 1
+  property_id: 
+
+two:
+  bidRoomId: 1
+  bidRequestId: 1
+  roomTypeId: 1
+  property_id: 

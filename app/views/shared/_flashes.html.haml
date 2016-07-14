@@ -1,0 +1,22 @@
+/- if object.errors.any?
+/	%div.data-alert.alert-box.alert.radius
+/		%div= "Oops! Your action could not be completed. Please correct the following #{pluralize(object.errors.count, "error")}:"
+/		%div
+/			%ul 
+/				- object.errors.full_messages.each do |message|
+/					%li= message
+
+- flash.each do |name, msg|
+	-if msg.is_a?(String)
+		.data-alert{ class:"alert-box round #{name.to_s == 'notice' ? 'success' : 'alert'}"}
+			=content_tag :div, msg
+			.a{href:"#", class:"close"} &times;
+
+/<% flash.each do |name, msg| %>
+/  <% if msg.is_a?(String) %>
+/    <div data-alert class="alert-box round <%= name.to_s == 'notice' ? 'success' : 'alert' %>">
+/      <%= content_tag :div, msg %>
+/      <a href="#" class="close">&times;</a>
+/    </div>
+/  <% end %>
+/<% end %>

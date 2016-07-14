@@ -1,0 +1,27 @@
+%row
+	%h3.small-12.large-12.columns Properties
+%row
+	.small-12.large-2.columns
+		%a.button.radius{href:new_property_path}New Property
+		%a.button.radius{href:fetch_properties_path}Fetch New
+%row
+	.small-12.columns
+		%table.large-10.large-centered.columns
+			%thead
+				%th 
+				%th 
+				%th ID
+				%th Address
+				%th City
+				%th State
+				%th Status
+			%tbody
+			-@properties.each do |p|
+				%tr
+					%td=link_to "Del", property_path(p), method: :delete, confirm: "Are you sure?"
+					%td=link_to "Edit", edit_property_path(p)
+					%td=p.portal_request_id
+					%td=link_to "#{p.address}", p
+					%td=p.city
+					%td=p.state
+					%td=p.status

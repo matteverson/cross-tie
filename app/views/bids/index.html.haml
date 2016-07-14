@@ -1,0 +1,25 @@
+.h4.subheader All Bids
+=link_to "New Bid", new_bid_path, class: "a button radius"
+%table
+	%thead
+		%th
+		%th
+		%th Address
+		%th Vendor
+		%th Customer
+		%th Total Cost
+		%th Attachments
+	%tbody
+	-@bids.each do |b|
+		-p = Property.find(b.property_id)
+		%tr
+			%td=link_to "Edit", edit_bid_path(b)
+			%td=link_to "Delete", bid_path(b), method: :delete
+			%td=link_to "#{Property.find(b.property_id).address}", property_path(p)
+			%td=b.vendor
+			%td=b.customer
+			%td=b.total_cost
+			-if b.attachment_url != nil
+				%td=link_to "Attachment", b.attachment_url
+			-else
+				%td
